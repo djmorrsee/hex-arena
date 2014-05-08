@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="HexArenaClassDiagram.Grid">
+    <Position X="5.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.Entity">
+    <Position X="1.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgEAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAgg=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Grid" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HexArenaClassDiagram.Tile">
+    <Position X="6.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAACAABAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.StaticEntity">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.ActiveEntity">
+    <Position X="3" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.CoordinateSystems">
+    <Position X="8.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>CoordinateSystems.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.HAInput">
+    <Position X="15.75" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.HAInputGame">
+    <Position X="15" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAEAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>HAInputGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.HAInputMenu">
+    <Position X="17.5" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HAInputGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.HeroEntity">
+    <Position X="5.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAIACAAAAAAIIAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.732" />
+  </Class>
+  <Class Name="HexArenaClassDiagram.AIEntity">
+    <Position X="3.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.Creep">
+    <Position X="2.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Creep.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.539" />
+  </Class>
+  <Class Name="HexArenaClassDiagram.Tower">
+    <Position X="0.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Creep.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.519" />
+  </Class>
+  <Class Name="HexArenaClassDiagram.StationaryEntity">
+    <Position X="2" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.MovableEntity">
+    <Position X="4.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HexArenaClassDiagram.TurnController">
+    <Position X="12" Y="6.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAEAAAAAACAABAAAAA=</HashCode>
+      <FileName>MatchController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="HexArenaClassDiagram.AxialCoordinates">
+    <Position X="9.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACABAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="HexArenaClassDiagram.Vector3">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="HexArenaClassDiagram.Vector2">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="HexArenaClassDiagram.IAttackable">
+    <Position X="9.5" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HexArenaClassDiagram.ISkillable">
+    <Position X="9.5" Y="6.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAACAAAAAAAIAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ISkillable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="HexArenaClassDiagram.MoveDirection">
+    <Position X="12" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAACAAAAAAAAAAAAAAAAAAAAACAAAgAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HexArenaClassDiagram.UIContext">
+    <Position X="12" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAgAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
