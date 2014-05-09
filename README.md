@@ -11,4 +11,7 @@ Keep this up to date yo. Major folders and project files only
     |-ClassDiagram/
       |-HexArenaClassDiagram.sln
       |-HexArenaClassDiagram/
+    |-Unity
+      |-HexGrid/
+    |-Documentation
 
