@@ -6,16 +6,18 @@ This document serves to outline the rpg/moba elements found within HexArena.
 
 I want to create an rpg system similar to that found in P&D. Each monster has attack, defense, health values, etc. and can be powered up over time.
 
+Combat will have a whole lot of math in the background using all the stats. I'd like to find a balance of magical abilities and basic attack power, and have it all tie in well.
+
 ## Moba Elements
 
 I want there to be some kind of creep mechanic like those found in typical mobas. Some other kind of objective than just killing the other players. This will prevent games full of kiting etc.
 
-Typical moba elements:
+####Typical moba elements:
 
-> A per game xp system (gain levels, gold, etc. then restart the next game)
-> Lanes/Waves of computer controlled 'creeps' that can be killed for xp and gold
-> Towers/Objectives that can be destroyed for xp/gold
-> A 'Jungle' or sets of neutral creeps that can be killed
+>- A per game xp system (gain levels, gold, etc. then restart the next game)
+>- Lanes/Waves of computer controlled 'creeps' that can be killed for xp and gold
+>- Towers/Objectives that can be destroyed for xp/gold
+>- A 'Jungle' or sets of neutral creeps that can be killed
 
 
 ## Progression
