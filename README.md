@@ -13,4 +13,5 @@ Keep this up to date yo. Major folders and project files only
       |-HexArenaClassDiagram/
     |-Unity
       |-HexGrid/
+    |-Documentation
 
