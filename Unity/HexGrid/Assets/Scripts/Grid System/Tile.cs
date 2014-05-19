@@ -1,10 +1,10 @@
 ﻿//// Created By Daniel Morrissey
 ////////////////////////////////
 
-using UnityEngine;
+using UnityEngine;   
 using System.Collections;
 
-public class Tile : Object
+public class Tile : ScriptableObject
 {
 
 	////////////////////////////////
@@ -14,7 +14,7 @@ public class Tile : Object
 	public bool active;
 	
 	public bool occupied;
-	public Entity occupant = null;
+	public HexEntity occupant = null;
 	
 	public AxialCoordinates aCoord;
 	public XYZCoordinates xyCoord;
@@ -27,6 +27,11 @@ public class Tile : Object
 
 	
 	// Temp
+    public Tile()
+    {
+       
+    }
+
 	public void SpawnCube ()
 	{
 		GameObject cube = (GameObject)GameObject.CreatePrimitive (PrimitiveType.Quad);
@@ -42,7 +47,7 @@ public class Tile : Object
 	}
 
 	// Private
-	public bool Occupy (Entity e)
+	public bool Occupy (HexEntity e)
 	{
 		if (occupied) {
 			
@@ -59,7 +64,5 @@ public class Tile : Object
 		occupant = null;
 		occupied = false;
 	}
-
-
 	
 }
