@@ -5,63 +5,63 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EntityController : MonoBehaviour
+public class EntityController : ScriptableObject
 {
 
-	////////////////////////////////
-	//// Class Variables 
-	////////////////////////////////
-	// Public
-	public Grid grid;
+    ////////////////////////////////
+    //// Class Variables 
+    ////////////////////////////////
+    // Public
 
-	// Private
+    // Private
+    Grid grid;
 
-	
-
-	////////////////////////////////
-	//// Mono Methods
-	////////////////////////////////
-	void Start ()
-	{
-        grid = GetComponent<Grid>();
-        HeroEntity dj = new HeroEntity(0, "dj", grid, true, 10, 10, 1, 5, 3, 2, 1);
-        HeroEntity Hondune = new HeroEntity(1, "Hondune", grid, false, 10, 10, 2, 2, 5, 1, 1);
-
-        SpawnEntity(dj, new AxialCoordinates(1, 0, 0), true);
-        SpawnEntity(Hondune, new AxialCoordinates(0, 0, 0));
-	}
-
-	void Update ()
-	{
-	}
-	/*
-	void FixedUpdate () {
-
-	}
-
-	void OnGUI () {
-
-	}
-	*/
-	
-	////////////////////////////////
-	//// Class Methods 
-	////////////////////////////////
-	// Public
+    List<IActiveEntity> teamOne = new List<IActiveEntity>();
+    List<IActiveEntity> teamTwo = new List<IActiveEntity>();
 
 
+    ////////////////////////////////
+    //// Class Methods 
+    ////////////////////////////////
+    // Public
+    public void SetGrid(Grid _grid)
+    {
+        grid = _grid;
+    }
 
-	// Private
-	void SpawnEntity (HexEntity e, AxialCoordinates location, bool controllable=false)
-	{
+    public void AddEntityToTeam(IActiveEntity e, bool isTeamOne)
+    {
+        if (isTeamOne)
+        {
+            teamOne.Add(e);
+            SpawnEntity((HexEntity)(e), new AxialCoordinates(1, 0, 0), true);
+        }
+        else
+        {
+            teamTwo.Add(e);
+            SpawnEntity((HexEntity)(e), new AxialCoordinates(-1, 0, 0));
+        }
+
+    }
+
+    public List<IActiveEntity> GetTeamOne()
+    {
+        return teamOne;
+    }
+
+    public List<IActiveEntity> GetTeamTwo()
+    {
+        return teamTwo;
+    }
+
+    // Private
+    void SpawnEntity(HexEntity e, AxialCoordinates location, bool controllable = false)
+    {
         GameObject newEntity = GameObject.CreatePrimitive(PrimitiveType.Cube);
         HexEntityGameObject newEntityGO = newEntity.AddComponent<HexEntityGameObject>();
         newEntityGO.controllable = controllable;
 
         e.OccupyTile(grid.TileFromAxialCoordinates(location));
         newEntityGO.SetEntity(e);
-	}
-
-
-	
+    }
 }

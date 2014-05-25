@@ -86,8 +86,8 @@ GameObject:
   - 92: {fileID: 609578027}
   - 124: {fileID: 609578026}
   - 81: {fileID: 609578025}
-  - 114: {fileID: 609578024}
   - 114: {fileID: 609578030}
+  - 114: {fileID: 609578024}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -103,10 +103,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 609578023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e947ec13eee7b2e4e84cfe2767cd939e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f40d8f843f4dec42b6a30dfbcb4d4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 0}
 --- !u!81 &609578025
 AudioListener:
   m_ObjectHideFlags: 0

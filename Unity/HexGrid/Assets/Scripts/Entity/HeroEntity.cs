@@ -2,19 +2,18 @@
 ////////////////////////////////
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
-public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageableEntity, IAttackableEntity {
+public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageableEntity, IAttackableEntity
+{
 
-	////////////////////////////////
-	//// Class Variables 
-	////////////////////////////////
-	// Public
+    ////////////////////////////////
+    //// Class Variables 
+    ////////////////////////////////
+    // Public
 
 
-
-	// Private
+    // Private
     private int upMax;
     private int upCurrent;
 
@@ -31,13 +30,13 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
 
     private bool doneWithTurn;
 
-	
-	////////////////////////////////
-	//// Class Methods 
-	////////////////////////////////
-	// Public
-    public HeroEntity(int _id, string _name, Grid _grid, bool _teamA, int _utilityPoints, int _healthPoints, int _defensePower, int _moveCost, int _attackCost, int _attackPower, int _attackRange)
-        : base(_id, _name, _grid, _teamA)
+
+    ////////////////////////////////
+    //// Class Methods 
+    ////////////////////////////////
+    // Public
+    public HeroEntity(int _id, string _name, int _utilityPoints, int _healthPoints, int _defensePower, int _moveCost, int _attackCost, int _attackPower, int _attackRange)
+        : base(_id, _name)
     {
 
         InitializeUPValues(_utilityPoints);
@@ -49,7 +48,7 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
     }
 
 
-	// Private
+    // Private
     public int UPMax
     {
         get
@@ -91,7 +90,7 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
         if (this.UPCurrent <= 0)
         {
             this.UPCurrent = 0;
-            this.DoneWithTurn = true;
+            this.IsThisTurn = true;
         }
     }
 
@@ -111,10 +110,10 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
     public void ResetUP()
     {
         this.UPCurrent = this.UPMax;
-        this.DoneWithTurn = false;
+        this.IsThisTurn = false;
     }
 
-    public bool DoneWithTurn
+    public bool IsThisTurn
     {
         get
         {
@@ -124,6 +123,16 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
         {
             doneWithTurn = value;
         }
+    }
+
+    public void StartTurn()
+    {
+        return;
+    }
+
+    public void EndTurn()
+    {
+        return;
     }
 
     public int MoveCost
@@ -145,20 +154,23 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
 
     public void Move(MoveDirection direction)
     {
-        //if (!CanDoAction(this.moveCost))
-        //{
-        //    throw new System.Exception("No UP!");
-        //}
+        if (!CanDoAction(this.moveCost))
+        {
+            return;
+        }
 
         bool canMove = true;
         List<Tile> requestedTiles = new List<Tile>();
 
-        foreach(Tile t in this.tilesOccupied) {
-            Tile requestedTile = grid.TileInDirectionFromTile(t, direction);
+        foreach (Tile t in this.tilesOccupied)
+        {
+            Tile requestedTile = t.grid.TileInDirectionFromTile(t, direction);
             if (!requestedTile.active || requestedTile.occupied)
             {
                 canMove = false;
-            } else {
+            }
+            else
+            {
                 requestedTiles.Add(requestedTile);
             }
         }

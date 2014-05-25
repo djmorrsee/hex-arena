@@ -4,28 +4,31 @@
 using UnityEngine;
 using System.Collections;
 
-public class HexEntityGameObject : MonoBehaviour {
+public class HexEntityGameObject : MonoBehaviour
+{
 
-	////////////////////////////////
-	//// Class Variables 
-	////////////////////////////////
-	// Public
+    ////////////////////////////////
+    //// Class Variables 
+    ////////////////////////////////
+    // Public
     public bool controllable = false;
     public int health;
     public int UP;
 
-	// Private
+    // Private
     HexEntity thisEntity;
-	
 
-	////////////////////////////////
-	//// Mono Methods
-	////////////////////////////////
-	void Start () {
 
-	}
+    ////////////////////////////////
+    //// Mono Methods
+    ////////////////////////////////
+    void Start()
+    {
 
-	void Update () {
+    }
+
+    void Update()
+    {
         if (thisEntity != null)
         {
             MoveToTile();
@@ -36,21 +39,21 @@ public class HexEntityGameObject : MonoBehaviour {
             MoveEntity();
         }
         UpdateValues();
-	}
-	/*
-	void FixedUpdate () {
+    }
+    /*
+    void FixedUpdate () {
 
-	}
+    }
 
-	void OnGUI () {
+    void OnGUI () {
 
-	}
-	*/
-	
-	////////////////////////////////
-	//// Class Methods 
-	////////////////////////////////
-	// Public
+    }
+    */
+
+    ////////////////////////////////
+    //// Class Methods 
+    ////////////////////////////////
+    // Public
     public void SetEntity(HexEntity e)
     {
         thisEntity = e;
@@ -63,7 +66,7 @@ public class HexEntityGameObject : MonoBehaviour {
         gameObject.transform.position = thisEntity.GetMainTile().worldLocation;
     }
 
-	// Private
+    // Private
     void UpdateValues()
     {
         health = ((IDamageableEntity)thisEntity).HPCurrent;
@@ -72,7 +75,8 @@ public class HexEntityGameObject : MonoBehaviour {
 
     void MoveEntity()
     {
-        if(((IActiveEntity)thisEntity).CanDoAction(((IMoveableEntity)thisEntity).MoveCost)) {
+        if (((IActiveEntity)thisEntity).CanDoAction(((IMoveableEntity)thisEntity).MoveCost))
+        {
             if (Input.GetKeyDown(KeyCode.W))
             {
                 ((IMoveableEntity)thisEntity).Move(MoveDirection.upl);
@@ -100,7 +104,7 @@ public class HexEntityGameObject : MonoBehaviour {
         }
 
 
-        
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -112,5 +116,5 @@ public class HexEntityGameObject : MonoBehaviour {
     }
 
 
-	
+
 }

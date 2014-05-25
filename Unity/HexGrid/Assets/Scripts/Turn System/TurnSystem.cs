@@ -2,10 +2,11 @@
 ////////////////////////////////
 
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TurnSystem : MonoBehaviour
+public class TurnSystem : ScriptableObject
 {
 
     ////////////////////////////////
@@ -14,96 +15,72 @@ public class TurnSystem : MonoBehaviour
     // Public
 
 
-
     // Private
-    List<IActiveEntity> teamOne = new List<IActiveEntity>();
-    List<IActiveEntity> teamTwo = new List<IActiveEntity>();
+    Grid grid;
 
-    bool teamTurn = false;
-    bool teamReset = false;
+    bool isTeamOneTurn = true;
 
-    ////////////////////////////////
-    //// Mono Methods
-    ////////////////////////////////
-    void Start()
-    {
+    List<IActiveEntity> teamOne;
+    List<IActiveEntity> teamTwo;
 
-    }
+    List<bool> turnFinished;
 
-    void Update()
-    {
-
-        if (teamReset)
-        {
-            if (WaitForTurn(teamTurn))
-            {
-                teamReset = false;
-                teamTurn = !teamTurn;
-            }
-        }
-        else
-        {
-            TakeTurn(teamTurn);
-            teamReset = true;
-        }
-
-    }
-    /*
-    void FixedUpdate () {
-
-    }
-
-    void OnGUI () {
-
-    }
-    */
 
     ////////////////////////////////
     //// Class Methods 
     ////////////////////////////////
     // Public
-    public void RegisterEntity(IActiveEntity entity, bool teamA)
+    public void InitializeTeams(List<IActiveEntity> _teamOne, List<IActiveEntity> _teamTwo)
     {
-        if (teamA)
-            teamOne.Add(entity);
-        else
-            teamTwo.Add(entity);
+        teamOne = _teamOne;
+        teamTwo = _teamTwo;
     }
 
-    public void TakeTurn(bool teamA)
+    public void EndTurn(IActiveEntity e)
     {
-        List<IActiveEntity> thisTeam;
-        if (teamA)
+        if (isTeamOneTurn)
         {
-            thisTeam = teamOne;
+            if (!teamOne.Contains(e))
+            {
+                Console.WriteLine("Error: Not E's Turn!");
+            }
+            else
+            {
+                turnFinished.Insert(teamOne.IndexOf(e), true);
+            }
         }
-        else
+    }
+
+    public bool EntitiesAreTeamMembers(IActiveEntity e0, IActiveEntity e1)
+    {
+        if (teamOne.Contains(e0))
         {
-            thisTeam = teamTwo;
+            return teamOne.Contains(e1);
         }
-        foreach (IActiveEntity e in thisTeam)
+        else if (teamTwo.Contains(e0))
         {
-            e.ResetUP();
-            // Setup control passing here
+            return teamTwo.Contains(e1);
         }
+        return false;
     }
 
     // Private
-    bool WaitForTurn(bool teamA)
+    void StartTurnForTeam(bool isTeamOne)
     {
-        List<IActiveEntity> thisTeam;
+        List<IActiveEntity> team = GetTeam(isTeamOne);
+        turnFinished = new List<bool>(team.Count);
 
-        if (teamA)
+        foreach (IActiveEntity e in team)
         {
-            thisTeam = teamOne;
+            e.StartTurn();
         }
-        else
+    }
+
+    bool TurnIsDone(bool isTeamOne)
+    {
+        foreach (bool b in turnFinished)
         {
-            thisTeam = teamTwo;
-        }
-        foreach (IActiveEntity e in thisTeam)
-        {
-            if (!e.DoneWithTurn)
+            if (!b)
             {
                 return false;
             }
@@ -111,6 +88,29 @@ public class TurnSystem : MonoBehaviour
         return true;
     }
 
+    List<IActiveEntity> GetTeam(bool isTeamOne)
+    {
+        List<IActiveEntity> team;
+        if (isTeamOne)
+            team = teamOne;
+        else
+            team = teamTwo;
 
+        return team;
+    }
 
+    bool AssertNoTeamOverlap()
+    {
+        foreach (IActiveEntity e in teamOne)
+        {
+            foreach (IActiveEntity e1 in teamTwo)
+            {
+                if (e.Equals(e1))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

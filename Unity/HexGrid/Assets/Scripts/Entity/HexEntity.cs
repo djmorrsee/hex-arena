@@ -13,61 +13,40 @@ public class HexEntity : object
     //// Class Variables 
     ////////////////////////////////
     // Public
-    public HexEntity(int _id, string _name, Grid _grid, bool _teamA)
+    public HexEntity(int _id, string _name)
     {
         entityID = _id;
-        grid = _grid;
         entityName = _name;
-        teamA = _teamA;
     }
 
 
-    // Private
+    // Private ivars
     protected int entityID;
     protected string entityName;
-    protected bool teamA;
-    protected Grid grid;
-    protected List<Tile> tilesOccupied = new List<Tile>();
+    protected bool isTeamOne;
 
+    protected List<Tile> tilesOccupied = new List<Tile>();
 
     ////////////////////////////////
     //// Class Methods 
     ////////////////////////////////
-    // Public
+    // Public Properties
     public int EntityID
     {
-        get
-        {
-            return entityID;
-        }
-        set
-        {
-            entityID = value;
-        }
+        get { return entityID; }
+        set { entityID = value; }
     }
 
     public string EntityName
     {
         get { return entityName; }
-        set { entityName = value;  }
-    }
-
-    public Grid Grid
-    {
-        get
-        {
-            return grid;
-        }
-        set
-        {
-            grid = value;
-        }
+        set { entityName = value; }
     }
 
     public bool TeamA
     {
-        get { return teamA; }
-        set { teamA = value; }
+        get { return isTeamOne; }
+        set { isTeamOne = value; }
     }
 
     public override string ToString()
@@ -81,6 +60,8 @@ public class HexEntity : object
         return s;
     }
 
+    /////////////////
+    // Public Methods
     public void OccupyTile(Tile t)
     {
         tilesOccupied.Add(t);
@@ -100,50 +81,38 @@ public class HexEntity : object
     {
         return this.tilesOccupied[0];
     }
-
-    // Private
-
 }
 
 public interface IActiveEntity
 {
-    // An Entity That has UP to perform actions
+    // An Entity That has UP and takes a turn
 
-    int UPMax
-    {
-        get;
-        set;
-    }
+    // Interface Properties
+    int UPMax { get; set; }
+    int UPCurrent { get; set; }
 
-    int UPCurrent
-    {
-        get;
-        set;
-    }
+    bool IsThisTurn { get; set; }
 
-    bool DoneWithTurn
-    {
-        get;
-        set;
-    }
-
+    // Interface Methods
     void InitializeUPValues(int amount);
 
     void DoAction(int cost);
     void ChangeMaxUP(int amount);
 
     bool CanDoAction(int cost);
+
     void ResetUP();
+
+
+    void EndTurn();
+    void StartTurn();
 }
 
 public interface IMoveableEntity
 {
     // An Entity That Can Move Tiles
-    int MoveCost
-    {
-        get;
-        set;
-    }
+    int MoveCost { get; set; }
+
     void Move(MoveDirection direction);
     void InitMoveCost(int cost);
 }
@@ -151,24 +120,13 @@ public interface IMoveableEntity
 public interface IDamageableEntity
 {
     // An Entity that has hp and takes damage
+    // Interface Properties
+    int HPMax { get; set; }
+    int HPCurrent { get; set; }
 
-    int HPMax
-    {
-        get;
-        set;
-    }
-    int HPCurrent
-    {
-        get;
-        set;
-    }
+    int DefensePower { get; set; }
 
-    int DefensePower
-    {
-        get;
-        set;
-    }
-
+    // Interface Methods
     void InitializeHPValues(int startingHP, int startingDP);
 
     int DoDamage(int damage);
@@ -180,22 +138,12 @@ public interface IDamageableEntity
 public interface IAttackableEntity
 {
     // An Entity that can attack
+    // Interface Properties
+    int AttackPower { get; set; }
+    int AttackCost { get; set; }
+    int AttackRange { get; set; }
 
-    int AttackPower
-    {
-        get;
-        set;
-    }
-    int AttackCost
-    {
-        get;
-        set;
-    }
-    int AttackRange
-    {
-        get;
-        set;
-    }
+    // Interface Methods
     void AttackEntity(IDamageableEntity entity);
     void InitAttackValues(int cost, int power, int range);
     List<HexEntity> EntitiesInRange();
@@ -206,33 +154,13 @@ public interface ISkillableEntity
 {
     // An Entity with an array of skills 
 
-    int[] SkillCosts
-    {
-        get;
-        set;
-    }
+    int[] SkillCosts { get; set; }
 
-    int[] SkillLevels
-    {
-        get;
-        set;
-    }
+    int[] SkillLevels { get; set; }
 
-    Skill Skill01
-    {
-        get;
-        set;
-    }
-    Skill Skill02
-    {
-        get;
-        set;
-    }
+    Skill Skill01 { get; set; }
+    Skill Skill02 { get; set; }
 
-    Skill Skill03
-    {
-        get;
-        set;
-    }
+
 }
 

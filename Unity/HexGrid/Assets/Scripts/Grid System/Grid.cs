@@ -27,7 +27,6 @@ public class Grid : MonoBehaviour
     {
         grid = CreateGrid();
 
-
         RangeFinder.grid = this;
     }
 
