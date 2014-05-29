@@ -26,7 +26,7 @@ public static class RangeFinder : object
     {
         List<Tile> tiles = new List<Tile>();
 
-        CubeCoordinates tileCoord = CoordinateSystems.AxialToCube(t.aCoord);
+        CubeCoordinates tileCoord = CoordinateSystems.AxialToCube(t.GetAxialCoords());
 
         for (int i = -range; i <= range; ++i)
         {
@@ -68,9 +68,10 @@ public static class RangeFinder : object
                     continue;
                 }
             }
-            if (_t.occupied)
+
+            HexEntity he = _t.OccupantOrNull();
+            if (he != null)
             {
-                HexEntity he = _t.occupant;
                 entities.Add(he);
             }
         }

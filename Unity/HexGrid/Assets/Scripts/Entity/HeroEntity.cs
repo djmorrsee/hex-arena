@@ -164,8 +164,10 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
 
         foreach (Tile t in this.tilesOccupied)
         {
-            Tile requestedTile = t.grid.TileInDirectionFromTile(t, direction);
-            if (!requestedTile.active || requestedTile.occupied)
+            Tile requestedTile = t.TileInDirection(direction);
+
+                
+            if (requestedTile == null || !requestedTile.IsOpen())
             {
                 canMove = false;
             }

@@ -15,8 +15,13 @@ public class HexEntityGameObject : MonoBehaviour
     public int health;
     public int UP;
 
+    [SerializeField] S_AxialCoords axialCoords = new S_AxialCoords();
+    [SerializeField] S_XYCoords xyCoords = new S_XYCoords();
+
     // Private
     HexEntity thisEntity;
+
+
 
 
     ////////////////////////////////
@@ -63,7 +68,7 @@ public class HexEntityGameObject : MonoBehaviour
 
     public void MoveToTile()
     {
-        gameObject.transform.position = thisEntity.GetMainTile().worldLocation;
+        gameObject.transform.position = thisEntity.GetMainTile().GetWorldLocation() + 0.5f * Vector3.up;
     }
 
     // Private
@@ -71,6 +76,11 @@ public class HexEntityGameObject : MonoBehaviour
     {
         health = ((IDamageableEntity)thisEntity).HPCurrent;
         UP = ((IActiveEntity)thisEntity).UPCurrent;
+
+        Tile t = thisEntity.GetMainTile();
+
+        axialCoords.SetCoords(t.GetAxialCoords());
+        xyCoords.SetCoords(t.GetXYCoords());
     }
 
     void MoveEntity()

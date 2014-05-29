@@ -29,17 +29,17 @@ public class EntityController : ScriptableObject
         grid = _grid;
     }
 
-    public void AddEntityToTeam(IActiveEntity e, bool isTeamOne)
+    public void AddEntityToTeam(IActiveEntity e, bool isTeamOne = false)
     {
         if (isTeamOne)
         {
             teamOne.Add(e);
-            SpawnEntity((HexEntity)(e), new AxialCoordinates(1, 0, 0), true);
+            SpawnEntity((HexEntity)(e), OpenAxialCoordForTeam(isTeamOne), true);
         }
         else
         {
             teamTwo.Add(e);
-            SpawnEntity((HexEntity)(e), new AxialCoordinates(-1, 0, 0));
+            SpawnEntity((HexEntity)(e), OpenAxialCoordForTeam(isTeamOne));
         }
 
     }
@@ -64,4 +64,23 @@ public class EntityController : ScriptableObject
         e.OccupyTile(grid.TileFromAxialCoordinates(location));
         newEntityGO.SetEntity(e);
     }
+
+    AxialCoordinates OpenAxialCoordForTeam(bool teamOne)
+    {
+        AxialCoordinates ax;
+
+        if (teamOne)
+        {
+
+            ax =  new AxialCoordinates(-grid.GetWidth() / 2, 0, 0);
+        }
+        else
+        {
+            ax =  new AxialCoordinates(grid.GetWidth() / 2, 0, 0);
+        }
+
+
+        return ax;
+    }
+
 }

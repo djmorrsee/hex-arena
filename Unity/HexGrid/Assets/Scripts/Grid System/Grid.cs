@@ -3,57 +3,52 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
-public class Grid : MonoBehaviour
+[System.Serializable]
+public class Grid : ScriptableObject
 {
 
     ////////////////////////////////
     //// Class Variables 
     ////////////////////////////////
     // Public
-    public int gridHeight;
-    public int gridWidth;
 
-    public float hexSize;
 
     // Private
-    Tile[,] grid;
+    [SerializeField]Tile[,] grid;
 
-    ////////////////////////////////
-    //// Mono Methods
-    ////////////////////////////////
-    void Start()
+    List<Tile> teamOneEndZone;
+    List<Tile> teamTwoEndZone;
+
+    [SerializeField]int gridHeight;
+    public int GetHeight()
     {
-        grid = CreateGrid();
-
-        RangeFinder.grid = this;
+        return gridHeight;
     }
-
-    void Update()
+    [SerializeField]int gridWidth;
+    public int GetWidth()
     {
-
-    }
-    /*
-    void FixedUpdate () {
-
+        return gridWidth;
     }
 
-    void OnGUI () {
+    [SerializeField]float hexSize;
 
-    }
-    */
 
     ////////////////////////////////
     //// Class Methods 
     ////////////////////////////////
     // Public
-
-
-
-    // Private
-    Tile[,] CreateGrid()
+    public void CreateGrid(int _gridHeight, int _gridWidth, float _hexSize)
     {
+        gridHeight = _gridHeight;
+        gridWidth = _gridWidth;
+        hexSize = _hexSize;
+
+        GameObject g = new GameObject("Grid");
+        g.transform.position = Vector3.zero;
+
         float height = 2 * hexSize;
         float width = Mathf.Sqrt(3f) / 2f * height;
 
@@ -75,18 +70,17 @@ public class Grid : MonoBehaviour
                 {
                     xPos += 0.5f * dw;
                 }
+                Vector3 wp = new Vector3(xPos, 0, yPos);
+                XYZCoordinates xy = CoordsFromIndices(j, i);
 
-                thisTile.worldLocation = new Vector3(xPos, 0, yPos);
-                thisTile.xyCoord = CoordsFromIndices(j, i);
-                thisTile.aCoord = CoordinateSystems.XYToAxial(thisTile.xyCoord);
 
-                thisTile.SpawnCube();
-                thisTile.active = true;
-
+                thisTile.Init(this, wp, xy, true, true, g.transform);
                 newGrid[j, i] = thisTile;
             }
         }
-        return newGrid;
+        this.grid = newGrid;
+        SetActiveTiles();
+        SetEndZones();
     }
 
     public Tile TileFromAxialCoordinates(AxialCoordinates coord)
@@ -94,10 +88,7 @@ public class Grid : MonoBehaviour
         XYZCoordinates xy = CoordinateSystems.AxialToXY(coord);
         Vector2 ind = IndicesFromCoords(xy);
 
-        if (ind.x < 0 || ind.y < 0 || ind.x >= gridWidth || ind.y >= gridHeight)
-        {
-        }
-        else
+        if (!(ind.x < 0 || ind.y < 0 || ind.x >= gridWidth || ind.y >= gridHeight))
         {
             Tile t = grid[(int)ind.x, (int)ind.y];
             return t;
@@ -106,32 +97,9 @@ public class Grid : MonoBehaviour
         return null;
     }
 
-    XYZCoordinates CoordsFromIndices(int x, int y)
-    {
-        x -= gridWidth / 2;
-        y -= gridHeight / 2;
-        return new XYZCoordinates(x, y, 0);
-    }
-
-    Vector2 IndicesFromCoords(XYZCoordinates coords)
-    {
-        coords.x += gridWidth / 2;
-        coords.y += gridHeight / 2;
-
-        if (coords.x < 0)
-        {
-            coords.x = 0;
-        }
-        if (coords.y < 0)
-        {
-            coords.y = 0;
-        }
-        return new Vector2(coords.x, coords.y);
-    }
-
     public Tile TileInDirectionFromTile(Tile t, MoveDirection dir)
     {
-        AxialCoordinates ax = t.aCoord;
+        AxialCoordinates ax = t.GetAxialCoords();
 
         switch (dir)
         {
@@ -159,13 +127,57 @@ public class Grid : MonoBehaviour
         return TileFromAxialCoordinates(ax);
     }
 
-    void SpawnEntity(HexEntity e, AxialCoordinates location)
+
+    // Private Methods
+    XYZCoordinates CoordsFromIndices(int x, int y)
     {
-        Tile thisTile = TileFromAxialCoordinates(location);
-        if (thisTile.Occupy(e))
+        x -= gridWidth / 2;
+        y -= gridHeight / 2;
+        return new XYZCoordinates(x, y, 0);
+    }
+
+    Vector2 IndicesFromCoords(XYZCoordinates coords)
+    {
+        coords.x += gridWidth / 2;
+        coords.y += gridHeight / 2;
+
+        if (coords.x < 0)
         {
-            e.OccupyTile(thisTile);
+            coords.x = 0;
+        }
+        if (coords.y < 0)
+        {
+            coords.y = 0;
+        }
+        return new Vector2(coords.x, coords.y);
+    }
+
+    void SetActiveTiles()
+    {
+        List<Tile> activeTiles = RangeFinder.TilesInRangeFromTile(TileFromAxialCoordinates(new AxialCoordinates()), gridWidth / 2);
+        for (int i = 0; i < gridWidth; i++)
+        {
+            for (int j = 0; j < gridHeight; j++)
+            {
+                if (!activeTiles.Contains(grid[i, j]))
+                {
+                    Tile t = grid[i, j];
+                    t.Deactivate();
+                }
+            }
+
         }
     }
 
+    void SetEndZones()
+    {
+        List<Tile> endZones = new List<Tile>();
+        
+        teamOneEndZone = RangeFinder.TilesInRangeFromTile(TileFromAxialCoordinates(new AxialCoordinates(-gridWidth / 2, 0, 0)), gridHeight / 4 + 1);
+        teamTwoEndZone = RangeFinder.TilesInRangeFromTile(TileFromAxialCoordinates(new AxialCoordinates(gridWidth / 2, 0, 0)), gridHeight / 4 + 1);
+        foreach (Tile t in teamOneEndZone.Concat(teamTwoEndZone))
+        {
+            t.Radiate();
+        }
+    }
 }
