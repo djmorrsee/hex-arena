@@ -23,7 +23,6 @@ public class HexEntity : object
     // Private ivars
     protected int entityID;
     protected string entityName;
-    protected bool isTeamOne;
 
     protected List<Tile> tilesOccupied = new List<Tile>();
 
@@ -43,11 +42,7 @@ public class HexEntity : object
         set { entityName = value; }
     }
 
-    public bool TeamA
-    {
-        get { return isTeamOne; }
-        set { isTeamOne = value; }
-    }
+
 
     public override string ToString()
     {

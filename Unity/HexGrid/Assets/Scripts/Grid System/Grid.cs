@@ -26,7 +26,6 @@ public class Grid : MonoBehaviour
     void Start()
     {
         grid = CreateGrid();
-
         RangeFinder.grid = this;
     }
 
@@ -48,12 +47,21 @@ public class Grid : MonoBehaviour
     //// Class Methods 
     ////////////////////////////////
     // Public
-
+    public void DehighlightGrid() {
+        for(int i = 0; i < gridWidth; ++i) {
+            for(int j = 0; j < gridHeight; ++j) {
+                grid[i, j].Dehighlight();
+            }
+        }
+    }
 
 
     // Private
     Tile[,] CreateGrid()
     {
+        GameObject _grid = new GameObject("grid");
+        _grid.transform.position = Vector3.zero;
+
         float height = 2 * hexSize;
         float width = Mathf.Sqrt(3f) / 2f * height;
 
@@ -68,6 +76,7 @@ public class Grid : MonoBehaviour
             {
 
                 Tile thisTile = ScriptableObject.CreateInstance<Tile>();
+                thisTile.SetGrid(this);
 
                 float yPos = i * -dh;
                 float xPos = j * dw;
@@ -80,7 +89,7 @@ public class Grid : MonoBehaviour
                 thisTile.xyCoord = CoordsFromIndices(j, i);
                 thisTile.aCoord = CoordinateSystems.XYToAxial(thisTile.xyCoord);
 
-                thisTile.SpawnCube();
+                thisTile.SpawnCube(_grid.transform);
                 thisTile.active = true;
 
                 newGrid[j, i] = thisTile;
@@ -96,14 +105,13 @@ public class Grid : MonoBehaviour
 
         if (ind.x < 0 || ind.y < 0 || ind.x >= gridWidth || ind.y >= gridHeight)
         {
+            return null;
         }
         else
         {
             Tile t = grid[(int)ind.x, (int)ind.y];
             return t;
         }
-
-        return null;
     }
 
     XYZCoordinates CoordsFromIndices(int x, int y)
@@ -158,14 +166,4 @@ public class Grid : MonoBehaviour
         }
         return TileFromAxialCoordinates(ax);
     }
-
-    void SpawnEntity(HexEntity e, AxialCoordinates location)
-    {
-        Tile thisTile = TileFromAxialCoordinates(location);
-        if (thisTile.Occupy(e))
-        {
-            e.OccupyTile(thisTile);
-        }
-    }
-
 }

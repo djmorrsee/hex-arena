@@ -14,6 +14,7 @@ public class HexEntityGameObject : MonoBehaviour
     public bool controllable = false;
     public int health;
     public int UP;
+    public AxialCoordinates coord;
 
     // Private
     HexEntity thisEntity;
@@ -27,7 +28,7 @@ public class HexEntityGameObject : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (thisEntity != null)
         {
@@ -39,6 +40,7 @@ public class HexEntityGameObject : MonoBehaviour
             MoveEntity();
         }
         UpdateValues();
+        HighlightTilesInRange();
     }
     /*
     void FixedUpdate () {
@@ -71,6 +73,7 @@ public class HexEntityGameObject : MonoBehaviour
     {
         health = ((IDamageableEntity)thisEntity).HPCurrent;
         UP = ((IActiveEntity)thisEntity).UPCurrent;
+        coord = thisEntity.GetMainTile().aCoord;
     }
 
     void MoveEntity()
@@ -91,6 +94,7 @@ public class HexEntityGameObject : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.D))
             {
+                print("move");
                 ((IMoveableEntity)thisEntity).Move(MoveDirection.right);
             }
             else if (Input.GetKeyDown(KeyCode.Z))
@@ -115,6 +119,16 @@ public class HexEntityGameObject : MonoBehaviour
         }
     }
 
+    void HighlightTilesInRange()
+    {
+        Tile tile = thisEntity.GetMainTile();
+        tile.grid.DehighlightGrid();
+        
+        foreach (Tile t in RangeFinder.TilesInRangeFromTile(tile, ((IAttackableEntity)thisEntity).AttackRange))
+        {
+            t.Highlight();
+        }
 
+    }
 
 }

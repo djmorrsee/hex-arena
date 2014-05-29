@@ -2,6 +2,7 @@
 ////////////////////////////////
 
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class Tile : ScriptableObject
@@ -23,15 +24,17 @@ public class Tile : ScriptableObject
 
     public Grid grid;
 
+    GameObject tileObject;
+
 
     // Private
-    public void SpawnCube()
+    public void SpawnCube(Transform _parent = null)
     {
-        GameObject cube = (GameObject)GameObject.CreatePrimitive(PrimitiveType.Quad);
-        cube.transform.parent = Camera.main.transform;
-        cube.transform.position = worldLocation;
-        cube.transform.Rotate(Vector3.right * 90);
-        cube.name = string.Format("{0} --- {1}", xyCoord, aCoord);
+        tileObject = (GameObject)GameObject.CreatePrimitive(PrimitiveType.Quad);
+        tileObject.transform.parent = _parent;
+        tileObject.transform.position = worldLocation;
+        tileObject.transform.Rotate(Vector3.right * 90);
+        tileObject.name = string.Format("{0} --- {1}", xyCoord, aCoord);
     }
 
     public void SetGrid(Grid _grid)
@@ -44,13 +47,18 @@ public class Tile : ScriptableObject
         return string.Format("XY: {0} A: {1}", xyCoord, aCoord);
     }
 
+    public Tile TileInDirection(MoveDirection dir)
+    {
+        return grid.TileInDirectionFromTile(this, dir);
+    }
+
     // Private
     public bool Occupy(HexEntity e)
     {
         if (occupied)
         {
 
-            return false;
+            throw new System.Exception("Already Occupied!");
         }
         occupant = e;
         occupied = true;
@@ -62,6 +70,16 @@ public class Tile : ScriptableObject
     {
         occupant = null;
         occupied = false;
+    }
+
+    public void Highlight()
+    {
+        tileObject.renderer.material.color = Color.white;
+    }
+
+    public void Dehighlight()
+    {
+        tileObject.renderer.material.color = Color.red;
     }
 
 }

@@ -159,35 +159,37 @@ public class HeroEntity : HexEntity, IActiveEntity, IMoveableEntity, IDamageable
             return;
         }
 
-        bool canMove = true;
         List<Tile> requestedTiles = new List<Tile>();
 
         foreach (Tile t in this.tilesOccupied)
         {
-            Tile requestedTile = t.grid.TileInDirectionFromTile(t, direction);
+            Tile requestedTile = t.TileInDirection(direction);
+            if (requestedTile == null)
+            {
+                return;
+            }
             if (!requestedTile.active || requestedTile.occupied)
             {
-                canMove = false;
+                return;
             }
             else
             {
                 requestedTiles.Add(requestedTile);
             }
         }
-        if (canMove)
+
+        foreach (Tile t in this.tilesOccupied)
         {
-            foreach (Tile t in this.tilesOccupied)
-            {
-                t.Vacate();
-            }
-            this.tilesOccupied = requestedTiles;
-            foreach (Tile t in this.tilesOccupied)
-            {
-                t.Occupy(this);
-            }
+            t.Vacate();
+        }
+        this.tilesOccupied = requestedTiles;
+        foreach (Tile t in this.tilesOccupied)
+        {
+            t.Occupy(this);
         }
 
         DoAction(this.moveCost);
+
     }
 
     public int HPMax

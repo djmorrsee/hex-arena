@@ -15,13 +15,14 @@ public enum MoveDirection
     upl,
 }
 
-public struct XYZCoordinates
+[System.Serializable]
+public class XYZCoordinates
 {
     public int x;
     public int y;
     public int height;
 
-    public XYZCoordinates(int _x, int _y, int _height)
+    public XYZCoordinates(int _x = 0, int _y = 0, int _height = 0)
     {
         x = _x;
         y = _y;
@@ -61,7 +62,8 @@ public struct XYZCoordinates
     }
 }
 
-public struct CubeCoordinates
+[System.Serializable]
+public class CubeCoordinates
 {
     public int x;
     public int y;
@@ -69,7 +71,7 @@ public struct CubeCoordinates
 
     public int height;
 
-    public CubeCoordinates(int _x, int _y, int _z, int _h)
+    public CubeCoordinates(int _x = 0, int _y = 0, int _z = 0, int _h = 0)
     {
         x = _x;
         y = _y;
@@ -110,13 +112,14 @@ public struct CubeCoordinates
     }
 }
 
-public struct AxialCoordinates
+[System.Serializable]
+public class AxialCoordinates
 {
     public int q;
     public int r;
     public int h;
 
-    public AxialCoordinates(int _q, int _r, int _h)
+    public AxialCoordinates(int _q = 0, int _r = 0, int _h = 0)
     {
         q = _q;
         r = _r;
@@ -168,7 +171,7 @@ public static class CoordinateSystems : object
 
     public static AxialCoordinates CubeToAxial(CubeCoordinates coord)
     {
-        AxialCoordinates ax;
+        AxialCoordinates ax = new AxialCoordinates();
 
         ax.q = coord.x;
         ax.r = coord.z;
@@ -188,7 +191,7 @@ public static class CoordinateSystems : object
 
     public static XYZCoordinates CubeToXY(CubeCoordinates coord)
     {
-        XYZCoordinates xy;
+        XYZCoordinates xy = new XYZCoordinates();
 
         xy.x = coord.x + (coord.z - (coord.z & 1)) / 2;
         xy.y = coord.z;
@@ -199,7 +202,7 @@ public static class CoordinateSystems : object
 
     public static CubeCoordinates AxialToCube(AxialCoordinates coord)
     {
-        CubeCoordinates cube;
+        CubeCoordinates cube = new CubeCoordinates();
         cube.x = coord.q;
         cube.z = coord.r;
         cube.y = -cube.x - cube.z;
@@ -210,7 +213,7 @@ public static class CoordinateSystems : object
 
     public static CubeCoordinates XYToCube (XYZCoordinates coord)
     {
-        CubeCoordinates cube;
+        CubeCoordinates cube = new CubeCoordinates();
         cube.x = coord.x - (coord.y - (coord.y & 1)) / 2;
         cube.z = coord.y;
         cube.y = -cube.x - cube.z;
