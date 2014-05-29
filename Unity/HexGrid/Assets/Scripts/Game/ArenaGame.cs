@@ -30,9 +30,9 @@ public class ArenaGame : MonoBehaviour
         entityController = ScriptableObject.CreateInstance<EntityController>();
 
         entityController.SetGrid(grid);
-        //turnController.InitializeTeams(entityController.GetTeamOne(), entityController.GetTeamTwo());
+        turnController.InitializeTeams(entityController.GetTeamOne(), entityController.GetTeamTwo());
 
-        HeroEntity dj = new HeroEntity(0, "dj", 10, 10, 10, 0, 10, 10, 6);
+        HeroEntity dj = new HeroEntity(0, "dj", 10, 10, 10, 10, 10, 10, 10);
         entityController.AddEntityToTeam(dj, true);
     }
 

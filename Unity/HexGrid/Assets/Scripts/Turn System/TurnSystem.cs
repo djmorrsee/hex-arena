@@ -30,39 +30,53 @@ public class TurnSystem : ScriptableObject
     //// Class Methods 
     ////////////////////////////////
     // Public
-    public void StartTurnForTeam (bool _teamOne)  
+    public void InitializeTeams(List<IActiveEntity> _teamOne, List<IActiveEntity> _teamTwo)
     {
-        List<IActiveEntity> activeTeam = GetActiveTeam();
-
-        turnFinished = new List<bool>(activeTeam.Count);
-
+        teamOne = _teamOne;
+        teamTwo = _teamTwo;
     }
 
-    public void EntityFinishedTurned(IActiveEntity e)
+    public void EndTurn(IActiveEntity e)
     {
-        List<IActiveEntity> activeTeam = GetActiveTeam();
-        if (!activeTeam.Contains(e))
+        if (isTeamOneTurn)
         {
-            throw new System.Exception("Entity not on Active Team");
+            if (!teamOne.Contains(e))
+            {
+                Console.WriteLine("Error: Not E's Turn!");
+            }
+            else
+            {
+                turnFinished.Insert(teamOne.IndexOf(e), true);
+            }
         }
+    }
 
-        int idx = activeTeam.IndexOf(e);
-        turnFinished.Insert(idx, true);
-
-        if (TeamIsDone())
+    public bool EntitiesAreTeamMembers(IActiveEntity e0, IActiveEntity e1)
+    {
+        if (teamOne.Contains(e0))
         {
-            isTeamOneTurn = !isTeamOneTurn;
-            StartTurnForTeam(isTeamOneTurn);
+            return teamOne.Contains(e1);
         }
+        else if (teamTwo.Contains(e0))
+        {
+            return teamTwo.Contains(e1);
+        }
+        return false;
     }
 
     // Private
-    void RefreshTeams()
+    void StartTurnForTeam(bool isTeamOne)
     {
+        List<IActiveEntity> team = GetTeam(isTeamOne);
+        turnFinished = new List<bool>(team.Count);
 
+        foreach (IActiveEntity e in team)
+        {
+            e.StartTurn();
+        }
     }
 
-    bool TeamIsDone()
+    bool TurnIsDone(bool isTeamOne)
     {
         foreach (bool b in turnFinished)
         {
@@ -74,15 +88,29 @@ public class TurnSystem : ScriptableObject
         return true;
     }
 
-    List<IActiveEntity> GetActiveTeam()
+    List<IActiveEntity> GetTeam(bool isTeamOne)
     {
-        if (isTeamOneTurn)
-        {
-            return teamOne;
-        }
+        List<IActiveEntity> team;
+        if (isTeamOne)
+            team = teamOne;
         else
+            team = teamTwo;
+
+        return team;
+    }
+
+    bool AssertNoTeamOverlap()
+    {
+        foreach (IActiveEntity e in teamOne)
         {
-            return teamTwo;
+            foreach (IActiveEntity e1 in teamTwo)
+            {
+                if (e.Equals(e1))
+                {
+                    return false;
+                }
+            }
         }
+        return true;
     }
 }

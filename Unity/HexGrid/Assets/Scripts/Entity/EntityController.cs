@@ -34,7 +34,7 @@ public class EntityController : ScriptableObject
         if (isTeamOne)
         {
             teamOne.Add(e);
-            SpawnEntity((HexEntity)(e), new AxialCoordinates(0, 0, 0), true);
+            SpawnEntity((HexEntity)(e), new AxialCoordinates(1, 0, 0), true);
         }
         else
         {
